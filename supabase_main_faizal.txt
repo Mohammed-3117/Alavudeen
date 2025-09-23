@@ -1,0 +1,13 @@
+Supabase Cloud Storae for our Pandhal Project
+----------------------------------------------
+1.Loggin with github
+	userName : faizalmohammed190@gmail.com
+	Password : 973601790f
+
+2.Password for db - hcbkFvWkSMy3i58C
+
+3.API Project URL : https://olgqtllhmulljezfskbd.supabase.co
+
+4.API anon public key :eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ3F0bGxobXVsbGplemZza2JkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2MDkzMzIsImV4cCI6MjA3NDE4NTMzMn0.HUDf31AbSFjFa7KV-6EB8Q9wBj7IRAxQ2DDlfsOClmc
+
+5.photos remove panna supabase login pannikko then sidebar la storage nu oru option irukkum atha click pannu then athula buckets nu irukkum,athula photos nu irukkum atha click panna ulla ella photos um irukkum ok va
