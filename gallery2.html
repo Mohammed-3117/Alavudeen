@@ -325,14 +325,15 @@ const supabase = createClient(supabaseUrl, supabaseKey);
   gallery.innerHTML = ""; // clear gallery
 
   data.forEach(file => {
-    const { publicUrl } = supabase
-      .storage
-      .from("photos")
-      .getPublicUrl("uploads/" + file.name);
-
+    if (publicUrl) {
     const img = document.createElement("img");
     img.src = publicUrl;
     img.alt = file.name;
+    gallery.appendChild(img);
+} else {
+    console.warn("File URL undefined for:", file.name);
+}
+
 
     // Modal click
     img.onclick = function() {
