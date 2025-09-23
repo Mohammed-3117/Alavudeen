@@ -179,6 +179,9 @@
                 </nav>
             </div>
             <div class="container-xxl py-5 dark w-100 vh-100">
+                <button onclick="goBack()" class="btn btn-primary btn-sm">
+                <i class="bi bi-arrow-left"></i> Back
+              </button>
 <h2 class="" style="margin-top: 15px;">&nbsp;&nbsp; Image Gallery<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
   Add
 </button></h2>
@@ -400,9 +403,14 @@ loadGallery();
 
 
 </script>
-    
+    <script>
+function goBack() {
+  window.history.back(); // Goes back to the previous page
+}
+</script>
 </body>
 </html>
+
 
 
 
