@@ -313,6 +313,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 </script>
 <script>
 async function loadGallery() {
+    // List files directly in the "photos" bucket (no "uploads/" folder)
     const { data, error } = await supabase.storage.from("photos").list("", { limit: 100 });
 
     if (error) {
@@ -324,13 +325,13 @@ async function loadGallery() {
     gallery.innerHTML = "";
 
     data.forEach(file => {
-        // Skip "folders" or placeholders
+        // Skip folders or placeholders
         if (!file.name || file.name.endsWith("/")) return;
 
         const { data: urlData, error: urlError } = supabase
             .storage
             .from("photos")
-            .getPublicUrl("uploads/" + file.name);
+            .getPublicUrl(file.name); // no "uploads/" prefix
 
         if (urlError) {
             console.warn("Error getting URL for file:", file.name, urlError);
@@ -344,6 +345,7 @@ async function loadGallery() {
         img.src = publicUrl;
         img.alt = file.name;
 
+        // Modal click
         img.onclick = function() {
             document.getElementById("myModal").style.display = "block";
             document.getElementById("modalImg").src = this.src;
@@ -354,6 +356,7 @@ async function loadGallery() {
     });
 }
 loadGallery();
+
 
 </script>
     
