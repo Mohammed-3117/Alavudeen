@@ -313,7 +313,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 </script>
 <script>
     async function loadGallery() {
-        const { data, error } = await supabase.storage.from("photos").list("https://olgqtllhmulljezfskbd.supabase.co/storage/v1/object/public/photos/uploads/", { limit: 100 });
+        const { data, error } = await supabase.storage.from("photos").list("", { limit: 100 });
 
 
   if (error) {
