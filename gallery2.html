@@ -312,44 +312,55 @@ const supabase = createClient(supabaseUrl, supabaseKey);
   }
 </script>
 <script>
-    async function loadGallery() {
-        const { data, error } = await supabase.storage.from("photos").list("uploads", { limit: 100 });
+async function loadGallery() {
+    // List files inside the "uploads" folder of "photos" bucket
+    const { data, error } = await supabase.storage.from("photos").list("uploads", { limit: 100 });
 
+    if (error) {
+        console.error("Supabase storage error:", error);
+        return;
+    }
 
-  if (error) {
-    console.error(error);
-    return;
-  }
+    const gallery = document.getElementById("gallery");
+    gallery.innerHTML = ""; // clear gallery
 
-  const gallery = document.getElementById("gallery");
-  gallery.innerHTML = ""; // clear gallery
+    data.forEach(file => {
+        // Get public URL for each file
+        const { data: urlData, error: urlError } = supabase.storage
+            .from("photos")
+            .getPublicUrl("uploads/" + file.name);
 
-  data.forEach(file => {
-    if (publicUrl) {
-    const img = document.createElement("img");
-    img.src = publicUrl;
-    img.alt = file.name;
-    gallery.appendChild(img);
-} else {
-    console.warn("File URL undefined for:", file.name);
-}
+        if (urlError) {
+            console.warn("Error getting URL for file:", file.name, urlError);
+            return;
+        }
 
+        const publicUrl = urlData.publicUrl;
 
-    // Modal click
-    img.onclick = function() {
-      document.getElementById("myModal").style.display = "block";
-      document.getElementById("modalImg").src = this.src;
-      document.getElementById("caption").innerHTML = this.alt;
-    };
+        if (!publicUrl) {
+            console.warn("File URL undefined for:", file.name);
+            return;
+        }
 
-    gallery.appendChild(img);
-  });
+        // Create image element
+        const img = document.createElement("img");
+        img.src = publicUrl;
+        img.alt = file.name;
+
+        // Modal click
+        img.onclick = function() {
+            document.getElementById("myModal").style.display = "block";
+            document.getElementById("modalImg").src = this.src;
+            document.getElementById("caption").innerHTML = this.alt;
+        };
+
+        gallery.appendChild(img);
+    });
 }
 
 // Load when page starts
 loadGallery();
-
-    </script>
+</script>
     
 </body>
 </html>
