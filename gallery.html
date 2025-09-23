@@ -37,7 +37,7 @@
   body {
     font-family: Arial, sans-serif;
     background: #f8f9fa;
-    padding: 20px;
+    /* padding: 20px; */
   }
 
   h2 {
@@ -129,7 +129,7 @@
 </style>
 </head>
 <body>
-    <body>
+    <!-- <body> -->
         <div class="container-xxl bg-white p-0">
             <!-- Spinner Start -->
             <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -179,7 +179,9 @@
                 </nav>
             </div>
             <div class="container-xxl py-5 dark w-100 vh-100">
-<h2 class="" style="margin-top: 70px;">Responsive Image Gallery</h2>
+<h2 class="" style="margin-top: 15px;">&nbsp;&nbsp; Image Gallery<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Add
+</button></h2>
 
 <div class="gallery mt-5" id="gallery"></div>
 </div>
@@ -188,6 +190,26 @@
   <span class="close">&times;</span>
   <img class="modal-content mt-5" id="modalImg">
   <div id="caption"></div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Image Upload</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <label for="upload" class="form-label">Upload Photo</label>
+            <input type="file" id="fileInput" accept="image/*" class="form-control mb-3">
+          </div>
+          <center><button onclick="uploadImage()" class="btn btn-primary">Upload</button></center>
+          
+      </div>
+      
+    </div>
+  </div>
 </div>
 <!-- Footer Start -->
 <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s" id="contact">
@@ -274,6 +296,14 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const supabaseUrl = "https://olgqtllhmulljezfskbd.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ3F0bGxobXVsbGplemZza2JkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2MDkzMzIsImV4cCI6MjA3NDE4NTMzMn0.HUDf31AbSFjFa7KV-6EB8Q9wBj7IRAxQ2DDlfsOClmc";
+const { createClient } = window.supabase;
+const supabase = createClient(supabaseUrl, supabaseKey);
+</script>
+
 <script>
   // Get modal elements
   const modal = document.getElementById("myModal");
@@ -304,20 +334,71 @@
   }
 </script>
 <script>
-    const gallery = document.getElementById("gallery");
-    const totalImages = 20; // set a max possible number of images
-    for (let i = 1; i <= totalImages; i++) {
-        const img = document.createElement("img");
-        img.src = `Photos/${i}.jpeg`;
-        img.alt = `Image ${i}`;
-        img.onerror = () => img.style.display = 'none'; // hide if file doesn't exist
-        img.onclick = function() {
-            modal.style.display = "block";
-            modalImg.src = this.src;
-            captionText.innerHTML = this.alt;
-        };
-        gallery.appendChild(img);
+  async function uploadImage() {
+    const file = document.getElementById("fileInput").files[0];
+    if (!file) return alert("Please select an image");
+
+    const filePath = Date.now() + "-" + file.name;
+
+    const { data, error } = await supabase.storage
+        .from("photos")
+        .upload(filePath, file);
+
+    if (error) {
+        alert("❌ Upload failed: " + error.message);
+    } else {
+        alert("✅ Photo Uploaded Successfully!");
+        location.reload(); // Refresh the page
     }
-    </script>
+}
+
+async function loadGallery() {
+    // List files directly in the "photos" bucket (no "uploads/" folder)
+    const { data, error } = await supabase.storage.from("photos").list("", { limit: 100 });
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    const gallery = document.getElementById("gallery");
+    gallery.innerHTML = "";
+
+    data.forEach(file => {
+        // Skip folders or placeholders
+        if (!file.name || file.name.endsWith("/")) return;
+
+        const { data: urlData, error: urlError } = supabase
+            .storage
+            .from("photos")
+            .getPublicUrl(file.name); // no "uploads/" prefix
+
+        if (urlError) {
+            console.warn("Error getting URL for file:", file.name, urlError);
+            return;
+        }
+
+        const publicUrl = urlData.publicUrl;
+        if (!publicUrl) return;
+
+        const img = document.createElement("img");
+        img.src = publicUrl;
+        img.alt = file.name;
+
+        // Modal click
+        img.onclick = function() {
+            document.getElementById("myModal").style.display = "block";
+            document.getElementById("modalImg").src = this.src;
+            document.getElementById("caption").innerHTML = this.alt;
+        };
+
+        gallery.appendChild(img);
+    });
+}
+loadGallery();
+
+
+</script>
+    
 </body>
 </html>
