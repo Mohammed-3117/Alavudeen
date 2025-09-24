@@ -331,6 +331,12 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
   data.forEach((row, index) => {
     const tr = document.createElement("tr");
+
+    // Prepare WhatsApp message
+    const msg = encodeURIComponent(
+      `📄 Bill\n\nDate: ${row.date}\nEvent: ${row.event}\nName: ${row.name}\nPhone: ${row.phone}\nGrand Total: ₹${row.grand_total}`
+    );
+
     tr.innerHTML = `
       <td>${index + 1}</td>
       <td>${row.date}</td>
@@ -340,6 +346,9 @@ const supabase = createClient(supabaseUrl, supabaseKey);
       <td>
         <button class="btn btn-primary btn-sm me-1" onclick='viewBill(${JSON.stringify(row)})'>
           <i class="bi bi-eye"></i>
+        </button>
+        <button class="btn btn-success btn-sm me-1" onclick="window.open('https://wa.me/?text=${msg}', '_blank')">
+          <i class="bi bi-whatsapp"></i>
         </button>
         <button class="btn btn-danger btn-sm" onclick='deleteBill(${row.id})'>
           <i class="bi bi-trash"></i>
@@ -417,6 +426,7 @@ function viewBill(bill) {
 </body>
 
 </html>
+
 
 
 
