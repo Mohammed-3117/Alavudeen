@@ -199,6 +199,8 @@
                 </nav>
             </div>
             <div class="container-xxl py-2 dark w-100 vh-100">
+                <div class="container">
+                    
               <button onclick="goBack()" class="btn btn-primary btn-sm">
                 <i class="bi bi-arrow-left"></i> Back
               </button>
@@ -221,7 +223,7 @@
         </thead>
         <tbody id="billBody">
             <tr>
-                <td></td>
+                <td>1.</td>
                 <td><input type="text" placeholder="குறிப்பு" class="form-control" style="width: 110px;"></td>
                 <td><input type="number" value="" min="1" class="form-control" style="width: 70px;"></td>
                 <td><input type="number" value="" min="0" class="form-control" style="width: 90px;"></td>
@@ -247,6 +249,7 @@
 <div class="totals">
     <strong class="float-end mt-3 mx-3">Grand Total: ₹ <span id="grandTotal">0</span></strong>
   </div>
+                </div>
 
 
 <!-- Back to Top -->
@@ -391,5 +394,6 @@ if (!eventDate) {
 </body>
 
 </html>
+
 
 
