@@ -252,6 +252,24 @@ async function sendInvoiceWhatsApp() {
     alert("Your browser doesn’t support direct WhatsApp share. Please download and send manually.");
   }
 }
+async function captureInvoice() {
+  const invoiceElement = document.getElementById("invoice_wrapper");
+
+  // Force full height capture (disable scrollbars temporarily)
+  invoiceElement.style.overflow = "visible";
+  invoiceElement.style.height = "auto";
+
+  const canvas = await html2canvas(invoiceElement, {
+    scale: 2, // better quality
+    useCORS: true
+  });
+
+  // Restore after capture
+  invoiceElement.style.overflow = "";
+  invoiceElement.style.height = "";
+
+  return canvas;
+}
 
 </script>
 </body>
