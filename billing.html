@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Alavudeen - Pandhal & Decoration</title>
+    <link rel="icon" href="img/logo.png" type="image/png">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; }
+
+  body {
+    font-family: Arial, sans-serif;
+    background: #f8f9fa;
+    /* padding: 20px; */
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  /* Gallery container */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+  }
+
+  .gallery img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .gallery img:hover {
+    transform: scale(1.05);
+  }
+
+  /* Modal */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: rgba(0,0,0,0.8);
+  }
+
+  .modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 80%;
+    border-radius: 10px;
+  }
+
+  .modal-content, #caption {  
+    animation-name: zoom;
+    animation-duration: 0.3s;
+  }
+
+  @keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+  }
+
+  .close {
+    position: absolute;
+    top: 30px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .close:hover {
+    color: #ff6347;
+  }
+
+  /* Caption text */
+  #caption {
+    text-align: center;
+    color: #fff;
+    padding: 10px 0;
+  }
+
+  /* Responsive adjustments */
+  @media(max-width: 600px){
+    .gallery img {
+      height: 120px;
+    }
+  }
+/* Hide elements while printing */
+@media print {
+  .no-print,
+  .btn,
+  .navbar,
+  .back-to-top {
+    display: none !important;
+  }
+
+  body {
+    margin: 0;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    border: 1px solid #000;
+    padding: 5px;
+    text-align: center;
+  }
+
+  .totals {
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: right;
+  }
+}
+</style>
+</head>
+<body>
+    <!-- <body> -->
+        <div class="container-xxl bg-white p-0">
+            <!-- Spinner Start -->
+            <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <!-- Spinner End -->
+    
+    
+            <!-- Navbar & Hero Start -->
+            <div class="container-xxl position-relative p-0">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 px-lg-5 py-1 py-lg-0 d-flex justify-content-between align-items-center">
+                    
+            
+                    <!-- Logo and heading -->
+                    <a href="#" class="d-flex align-items-center mx-2 order-1">
+                        <img src="img/logo.png" alt="" style="height: 70px;">
+                        <span class="text-primary ms-2" style="font-size: 20px; font-weight: 700;">
+                            அலாவுதீன்
+                            <small class="text-light" style="font-size: 12px;">பந்தல் & டெக்கரேசன்</small>
+                        </span>
+                    </a>
+            
+                    <!-- Navbar links -->
+                    <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+                        <div class="navbar-nav ms-auto py-0 pe-4">
+                            <a href="index.html" class="nav-item nav-link active" style="font-size: 13px;">முகப்பு</a>
+                            <a href="#about" class="nav-item nav-link" style="font-size: 13px;">எங்களை பற்றி</a>
+                            <a href="#service" class="nav-item nav-link" style="font-size: 13px;">சேவைகள்</a>
+                            <a href="#contact" class="nav-item nav-link" style="font-size: 13px;">தொடர்பு கொள்ள</a>
+                        </div>
+                        <a href="" class="btn btn-primary py-2 px-4" style="font-size: 13px;">உங்கள் விழாவை முன்பதிவு செய்யுங்கள்</a>
+                    </div>
+                </nav>
+            </div>
+            <div class="container-xxl py-2 dark w-100 vh-100">
+              <button onclick="goBack()" class="btn btn-primary btn-sm">
+                <i class="bi bi-arrow-left"></i> Back
+              </button>
+<h2 class="" style="margin-top: 15px;">Billing</h2>
+<label for="">தேதி</label><input type="date" class="form-control" id="eventDate"/>
+<label for="">விழா</label><input type="text" class="form-control" id="eventName"/>
+<label for="">பெயர்</label><input type="text" class="form-control" id="name"/>
+<label for="">போன்</label><input type="text" class="form-control" id="phone"/>
+<div class="table-responsive mt-2">
+    <table class="table table-bordered" id="billTable">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>குறிப்பு</th>
+                <th>சதுர அடி</th>
+                <th>விலை (₹)</th>
+                <th>மொத்தம் (₹)</th>
+                <th>நீக்க</th>
+            </tr>
+        </thead>
+        <tbody id="billBody">
+            <tr>
+                <td></td>
+                <td><input type="text" placeholder="குறிப்பு" class="form-control" style="width: 110px;"></td>
+                <td><input type="number" value="" min="1" class="form-control" style="width: 70px;"></td>
+                <td><input type="number" value="" min="0" class="form-control" style="width: 90px;"></td>
+                <td class="rowTotal">0</td>
+                <td class="no-print"><button onclick="removeRow(this)">❌</button></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4"></td>
+                <td colspan="2">
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-success no-print" onclick="addRow()">Add</button>
+                            <button class="btn btn-info no-print" onclick="saveBill()">Save</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<div class="totals">
+    <strong class="float-end mt-3 mx-3">Grand Total: ₹ <span id="grandTotal">0</span></strong>
+  </div>
+
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/counterup/counterup.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/tempusdominus/js/moment.min.js"></script>
+<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://olgqtllhmulljezfskbd.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ3F0bGxobXVsbGplemZza2JkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2MDkzMzIsImV4cCI6MjA3NDE4NTMzMn0.HUDf31AbSFjFa7KV-6EB8Q9wBj7IRAxQ2DDlfsOClmc"; // anon key only
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+</script>
+<script>
+    async function saveBill() {
+    updateTotals();
+
+    const eventDate = document.getElementById("eventDate").value;
+if (!eventDate) {
+    alert("Please select a date!");
+    return;
+}
+    const eventName = document.getElementById("eventName").value;
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const grandTotal = parseFloat(document.getElementById("grandTotal").innerText);
+
+    const rows = document.querySelectorAll("#billBody tr");
+    const items = [];
+    rows.forEach(row => {
+        items.push({
+            note: row.cells[1].children[0].value,
+            sqft: parseFloat(row.cells[2].children[0].value) || 0,
+            price: parseFloat(row.cells[3].children[0].value) || 0,
+            total: parseFloat(row.querySelector(".rowTotal").innerText) || 0
+        });
+    });
+
+    const { data, error } = await supabase.from("bills").insert([{
+        date: eventDate,
+        event: eventName,
+        name,
+        phone,
+        items,
+        grand_total: grandTotal
+    }]);
+
+    if (error) {
+        alert("❌ Save failed: " + error.message);
+    } else {
+        alert("✅ Bill saved successfully!");
+        window.location.href = "report.html"; // redirect to report page
+    }
+}
+
+    // Update totals and S.No
+    function updateTotals() {
+      let rows = document.querySelectorAll("#billBody tr");
+      let grandTotal = 0;
+      let sno = 1;
+  
+      rows.forEach(row => {
+        // Set S.No
+        row.cells[0].innerText = sno++;
+  
+        // Get inputs
+        let sqft = row.cells[2].children[0].value || 0;
+        let price = row.cells[3].children[0].value || 0;
+  
+        // Calculate row total
+        let total = sqft * price;
+        row.querySelector(".rowTotal").innerText = total;
+  
+        // Add to grand total
+        grandTotal += total;
+      });
+  
+      document.getElementById("grandTotal").innerText = grandTotal;
+    }
+  
+    // Add a new row
+    function addRow() {
+      let table = document.getElementById("billBody");
+      let newRow = document.createElement("tr");
+      newRow.innerHTML = `
+        <td></td>
+        <td><input type="text" placeholder="குறிப்பு" class="form-control" style="width: 110px;"></td>
+        <td><input type="number" value="" min="1" class="form-control" style="width: 70px;"></td>
+        <td><input type="number" value="" min="0" class="form-control" style="width: 90px;"></td>
+        <td class="rowTotal">0</td>
+        <td class="no-print"><button onclick="removeRow(this)">❌</button></td>
+      `;
+      table.appendChild(newRow);
+      attachEvents(newRow);
+      updateTotals(); // Update after adding
+    }
+  
+    // Remove row
+    function removeRow(btn) {
+      btn.closest("tr").remove();
+      updateTotals();
+    }
+  
+    // Attach input events for live calculation
+    function attachEvents(row) {
+      row.querySelectorAll("input").forEach(input => {
+        input.addEventListener("input", updateTotals);
+      });
+    }
+  
+    // Initial event binding
+    document.querySelectorAll("#billBody input").forEach(input => {
+      input.addEventListener("input", updateTotals);
+    });
+  
+    // Print function
+    function printBill() {
+  updateTotals(); // ensure latest values
+  window.print();
+}
+  </script>
+  
+
+<script>
+  function goBack() {
+    window.history.back(); // Goes back to the previous page
+  }
+  </script>
+</body>
+</html>
