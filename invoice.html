@@ -26,6 +26,13 @@
         @media print, screen {
             #invoice_wrapper { overflow: visible !important; height: auto !important; }
         }
+        @media print {
+    #invoice_wrapper {
+        width: 100%;      /* Full width for screen */
+        max-width: 800px; /* Max width for PDF capture */
+    }
+}
+
     </style>
 </head>
 <body>
@@ -149,35 +156,35 @@ document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("invoice_download_btn").addEventListener("click", async function() {
     const invoiceElement = document.getElementById("invoice_wrapper");
 
-    // Capture as canvas
-    const canvas = await html2canvas(invoiceElement, { scale: 3, useCORS: true });
+    // Temporarily scale down if too wide
+    const originalWidth = invoiceElement.offsetWidth;
+    const pageWidth = 595; // A4 pt width
+    let scale = pageWidth / originalWidth;
+    if (scale > 1) scale = 1; // don't upscale
+
+    const canvas = await html2canvas(invoiceElement, { scale: 3 * scale, useCORS: true });
     const imgData = canvas.toDataURL("image/png");
 
     const pdf = new jsPDF('p', 'pt', 'a4');
-    const pageWidth = pdf.internal.pageSize.width;
-    const pageHeight = pdf.internal.pageSize.height;
+    const pdfWidth = pdf.internal.pageSize.width * 0.95; // small margin
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    const xOffset = (pdf.internal.pageSize.width - pdfWidth) / 2;
 
-    // Calculate image size and position
-    const imgWidth = pageWidth * 0.95; // leave small margin
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    const xOffset = (pageWidth - imgWidth) / 2; // center horizontally
-
-    let heightLeft = imgHeight;
+    let heightLeft = pdfHeight;
     let position = 0;
 
-    pdf.addImage(imgData, 'PNG', xOffset, position, imgWidth, imgHeight);
-    heightLeft -= pageHeight;
+    pdf.addImage(imgData, 'PNG', xOffset, position, pdfWidth, pdfHeight);
+    heightLeft -= pdf.internal.pageSize.height;
 
     while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
+        position = heightLeft - pdfHeight;
         pdf.addPage();
-        pdf.addImage(imgData, 'PNG', xOffset, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+        pdf.addImage(imgData, 'PNG', xOffset, position, pdfWidth, pdfHeight);
+        heightLeft -= pdf.internal.pageSize.height;
     }
 
     pdf.save("invoice.pdf");
 });
-
 
 
 
