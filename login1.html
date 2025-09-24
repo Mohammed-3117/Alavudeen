@@ -1,29 +1,195 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-  	<title>Login 10</title>
+
+<head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Alavudeen - Pandhal & Decoration</title>
+    <link rel="icon" href="img/logo.png" type="image/png">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
 
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	
-	<link rel="stylesheet" href="css/style1.css">
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
 
-	</head>
-	<body class="img js-fullheight" style="background-image: url(img/bg.jpg);">
-	<section class="ftco-section">
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style1.css" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; }
+
+  body {
+    font-family: Arial, sans-serif;
+    background: #f8f9fa;
+    /* padding: 20px; */
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  /* Gallery container */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+  }
+
+  .gallery img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .gallery img:hover {
+    transform: scale(1.05);
+  }
+
+  /* Modal */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: rgba(0,0,0,0.8);
+  }
+
+  .modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 80%;
+    border-radius: 10px;
+  }
+
+  .modal-content, #caption {  
+    animation-name: zoom;
+    animation-duration: 0.3s;
+  }
+
+  @keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+  }
+
+  .close {
+    position: absolute;
+    top: 30px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .close:hover {
+    color: #ff6347;
+  }
+
+  /* Caption text */
+  #caption {
+    text-align: center;
+    color: #fff;
+    padding: 10px 0;
+  }
+
+  /* Responsive adjustments */
+  @media(max-width: 600px){
+    .gallery img {
+      height: 120px;
+    }
+  }
+
+</style>
+</head>
+<body class="img js-fullheight vh-100" style="background-image: url(img/bg.jpg);">
+    <!-- <body> -->
+        <div class="container-xxl p-0">
+            <!-- Spinner Start -->
+            <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <!-- Spinner End -->
+    
+    
+            <!-- Navbar & Hero Start -->
+            <div class="container-xxl position-relative p-0">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 px-lg-5 py-1 py-lg-0 d-flex justify-content-between align-items-center">
+                    <!-- Toggler button for mobile -->
+                    <!-- <button class="navbar-toggler order-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars"></span>
+                    </button> -->
+            
+                    <!-- Logo and heading -->
+                    <a href="login.html" class="d-flex align-items-center mx-2 order-1">
+                        <img src="img/logo.png" alt="" style="height: 70px;">
+                        <span class="text-primary ms-2" style="font-size: 18px; font-weight: 700;">
+                            அலாவுதீன்
+                            <small class="text-light" style="font-size: 12px;">பந்தல் & டெக்கரேசன்</small>
+                        </span>
+                    </a>
+            
+                    <!-- Navbar links -->
+                    <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+                        <div class="navbar-nav ms-auto py-0 pe-4">
+                            <a href="index.html" class="nav-item nav-link active" style="font-size: 13px;">முகப்பு</a>
+                            <a href="#about" class="nav-item nav-link" style="font-size: 13px;">எங்களை பற்றி</a>
+                            <a href="#service" class="nav-item nav-link" style="font-size: 13px;">சேவைகள்</a>
+                            <!-- <a href="menu.html" class="nav-item nav-link" style="font-size: 13px;">வடிவங்கள்</a>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 13px;">பக்கங்கள்</a>
+                                <div class="dropdown-menu m-0">
+                                    <a href="booking.html" class="dropdown-item">முன்பதிவு</a>
+                                    <a href="team.html" class="dropdown-item">எங்கள் குழு</a>
+                                    <a href="testimonial.html" class="dropdown-item">வாடிக்கையாளர் கருத்துகள்</a>
+                                </div>
+                            </div> -->
+                            <a href="#contact" class="nav-item nav-link" style="font-size: 13px;">தொடர்பு கொள்ள</a>
+                        </div>
+                        <a href="" class="btn btn-primary py-2 px-4" style="font-size: 13px;">உங்கள் விழாவை முன்பதிவு செய்யுங்கள்</a>
+                    </div>
+                </nav>
+            </div>
+            <section class="ftco-section">
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-6 text-center mb-5">
-					<h2 class="heading-section">Login #10</h2>
+					<h2 class="heading-section">Admin</h2>
 				</div>
 			</div>
 			<div class="row justify-content-center">
 				<div class="col-md-6 col-lg-4">
 					<div class="login-wrap p-0">
-		      	<h3 class="mb-4 text-center">Have an account?</h3>
+		      	<h3 class="mb-4 text-center">Welcome</h3>
 		      	<form action="#" class="signin-form">
 		      		<div class="form-group">
 		      			<input type="text" class="form-control" placeholder="Username" required>
@@ -38,31 +204,58 @@
 	            <div class="form-group d-md-flex">
 	            	<div class="w-50">
 		            	<label class="checkbox-wrap checkbox-primary">Remember Me
-									  <input type="checkbox" checked>
-									  <span class="checkmark"></span>
-									</label>
-								</div>
-								<div class="w-50 text-md-right">
-									<a href="#" style="color: #fff">Forgot Password</a>
-								</div>
+						  <input type="checkbox" checked>
+						  <span class="checkmark"></span>
+						</label>
+					</div>
 	            </div>
 	          </form>
-	          <p class="w-100 text-center">&mdash; Or Sign In With &mdash;</p>
-	          <div class="social d-flex text-center">
-	          	<a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Facebook</a>
-	          	<a href="#" class="px-2 py-2 ml-md-1 rounded"><span class="ion-logo-twitter mr-2"></span> Twitter</a>
-	          </div>
+	          
 		      </div>
 				</div>
 			</div>
 		</div>
 	</section>
+                
+        </div>
+        
+        
 
-	<script src="js/jquery.min.js"></script>
-  <!-- <script src="js/popper.js"></script> -->
-  <!-- <script src="js/bootstrap.min.js"></script> -->
-  <!-- <script src="js/main.js"></script> -->
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/counterup/counterup.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/tempusdominus/js/moment.min.js"></script>
+<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-	</body>
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+
+<script>
+    // Static credentials
+    const staticUser = "admin";
+    const staticPass = "1122";
+  
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+        e.preventDefault(); // stop form from refreshing
+  
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+  
+        if (username === staticUser && password === staticPass) {
+            // Redirect if correct
+            window.location.href = "admin.html"; // change to your page
+        } else {
+            alert("Invalid Username or Password");
+        }
+    });
+  </script>
+
+</body>
+
 </html>
-
