@@ -76,7 +76,7 @@
                                 <table class="table mb-0 table-striped invoice-table">
                                     <thead class="bg-active">
                                         <tr>
-                                            <th>S.No.</th>
+                                            <!-- <th>S.No.</th> -->
                                             <th class="text-start">குறிப்பு</th>
                                             <th class="text-center">சதுர அடி</th>
                                             <th class="text-center">விலை (₹)</th>
@@ -145,7 +145,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let rows = "";
     billData.items.forEach((item, i) => {
         rows += `<tr>
-            <td>${i+1}</td>
             <td>${item.note}</td>
             <td class="text-center">${item.sqft}</td>
             <td class="text-center">₹${item.price}</td>
