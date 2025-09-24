@@ -157,25 +157,27 @@ document.getElementById("invoice_download_btn").addEventListener("click", async 
     const pageWidth = pdf.internal.pageSize.width;
     const pageHeight = pdf.internal.pageSize.height;
 
-    // Get canvas dimensions
-    const imgWidth = pageWidth;
+    // Calculate image size and position
+    const imgWidth = pageWidth * 0.95; // leave small margin
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    const xOffset = (pageWidth - imgWidth) / 2; // center horizontally
 
     let heightLeft = imgHeight;
     let position = 0;
 
-    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+    pdf.addImage(imgData, 'PNG', xOffset, position, imgWidth, imgHeight);
     heightLeft -= pageHeight;
 
     while (heightLeft > 0) {
         position = heightLeft - imgHeight;
         pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        pdf.addImage(imgData, 'PNG', xOffset, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
     }
 
     pdf.save("invoice.pdf");
 });
+
 
 
 
