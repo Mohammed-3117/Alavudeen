@@ -185,7 +185,7 @@
           <th>Event</th>
           <th>Name</th>
           <th>Phone</th>
-          <th>Action</th>
+          <th >Action</th>
         </tr>
       </thead>
       <tbody id="dataBody">
@@ -343,23 +343,31 @@ const supabase = createClient(supabaseUrl, supabaseKey);
       <td>${row.event}</td>
       <td>${row.name}</td>
       <td>${row.phone}</td>
-      <td>
-        <button class="btn btn-primary btn-sm me-1" onclick='viewBill(${JSON.stringify(row)})'>
-          <i class="bi bi-eye"></i>
-        </button>
-        <button class="btn btn-success btn-sm me-1" onclick="window.open('https://wa.me/?text=${msg}', '_blank')">
-          <i class="bi bi-whatsapp"></i>
-        </button>
-        <button class="btn btn-danger btn-sm" onclick='deleteBill(${row.id})'>
-          <i class="bi bi-trash"></i>
-        </button>
-      </td>
+      <td style="width: 120px; white-space: nowrap;">
+  <div class="d-flex">
+    <button class="btn btn-primary btn-sm me-1" onclick='viewBill(${JSON.stringify(row)})'>
+      <i class="bi bi-eye"></i>
+    </button>
+    <button class="btn btn-info btn-sm me-1" onclick='openInvoice(${JSON.stringify(row)})'>
+      <i class="bi bi-receipt text-light"></i>
+    </button>
+    <button class="btn btn-danger btn-sm" onclick='deleteBill(${row.id})'>
+      <i class="bi bi-trash"></i>
+    </button>
+  </div>
+</td>
+
     `;
     dataBody.appendChild(tr);
   });
 }
 
-    
+    function openInvoice(bill) {
+  // Save bill data to localStorage
+  localStorage.setItem("selectedBill", JSON.stringify(bill));
+  // Redirect to invoice.html
+  window.location.href = "invoice.html";
+}
     // View bill in modal
     // Example for viewBill function
 function viewBill(bill) {
@@ -426,7 +434,6 @@ function viewBill(bill) {
 </body>
 
 </html>
-
 
 
 
