@@ -32,6 +32,16 @@
         max-width: 800px; /* Max width for PDF capture */
     }
 }
+#invoice_wrapper table.invoice-table {
+    table-layout: fixed;       /* Fix column widths */
+    width: 100% !important;    /* Always fit container */
+    word-wrap: break-word;     /* Wrap long text */
+}
+
+#invoice_wrapper table.invoice-table th,
+#invoice_wrapper table.invoice-table td {
+    white-space: normal !important; /* Allow wrapping in cells */
+}
 
     </style>
 </head>
