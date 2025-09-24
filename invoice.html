@@ -19,79 +19,27 @@
     <!-- Custom Stylesheet -->
     <link type="text/css" rel="stylesheet" href="assets/css/style.css">
 
-    <!-- Responsive tweaks -->
     <style>
-        /* General scaling for small devices */
-        body {
-            font-size: 14px;
-        }
-
-        .invoice-content {
-            padding: 5px;
-        }
-
-        .invoice-headar h1 {
-            font-size: 18px;
-        }
-
-        .invoice-headar span {
-            font-size: 12px;
-        }
-
-        /* Table responsive */
-        .invoice-table th, 
-        .invoice-table td {
-            font-size: 12px;
-            padding: 3px;
-            white-space: nowrap;
-        }
-
-        .invoice-table {
-            display: block;
-            /* overflow-x: auto; */
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* Contact section */
-        .contact-info a {
-            font-size: 13px;
-            margin-bottom: 6px;
-        }
-
-        /* Buttons stack on mobile */
-        .invoice-btn-section {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .invoice-btn-section .btn {
-            flex: 1 1 100%;
-        }
-
-        /* Adjust for very small devices */
+        body { font-size: 14px; }
+        .invoice-content { padding: 5px; }
+        .invoice-headar h1 { font-size: 18px; }
+        .invoice-headar span { font-size: 12px; }
+        .invoice-table th, .invoice-table td { font-size: 12px; padding: 3px; white-space: nowrap; }
+        .contact-info a { font-size: 13px; margin-bottom: 6px; }
+        .invoice-btn-section { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .invoice-btn-section .btn { flex: 1 1 100%; }
         @media (max-width: 480px) {
-            .invoice-headar h1 {
-                font-size: 16px;
-            }
-            .invoice-headar .text-primary {
-                font-size: 20px;
-            }
-            .invoice-table th, .invoice-table td {
-                font-size: 11px;
-                padding: 4px;
-            }
+            .invoice-headar h1 { font-size: 16px; }
+            .invoice-headar .text-primary { font-size: 20px; }
+            .invoice-table th, .invoice-table td { font-size: 11px; padding: 4px; }
         }
         @media print, screen {
-  #invoice_wrapper {
-    overflow: visible !important;
-    height: auto !important;
-  }
-}
+            #invoice_wrapper { overflow: visible !important; height: auto !important; }
+        }
     </style>
 </head>
 <body>
 
-<!-- Invoice start -->
 <div class="invoice-2 invoice-content">
     <div class="container">
         <div class="row">
@@ -99,36 +47,31 @@
                 <div class="invoice-inner clearfix">
                     <div class="invoice-info clearfix" id="invoice_wrapper">
                         <div class="invoice-headar">
-                            <div class="row">
-                                <h1 class="text-center">
+                            <div class="row text-center">
+                                <h1>
                                     அலாவுதீன் <br>
                                     <span>பந்தல் & டெக்கரேசன்</span>
                                 </h1>
-                                <h1 class="text-primary text-center">Invoice</h1>
-                                <div class="row">
-                                    <div class="col"></div>
-                                    <div class="col-8">
-                                        <p class="mb-0 text-end">Date: <span class="date">24 Jan 2022</span></p>
-                                    </div>
-                                </div>
+                                <h1 class="text-primary">Invoice</h1>
+                                <p class="mb-0 text-end w-100">Date: <span class="date">24 Jan 2022</span></p>
                             </div>
                         </div>
+
                         <div class="invoice-top mt-3">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <div class="invoice-number mb-30">
-                                        <h4 class="inv-title-1">Invoice To</h4>
-                                        <h2 class="name">Jhon Smith</h2>
-                                        <p class="invo-addr-1">
-                                            Phone: +91 1234567890<br/>
-                                            Wedding Event<br/>
-                                        </p>
-                                    </div>
+                                    <h4 class="inv-title-1">Invoice To</h4>
+                                    <h2 class="name">Jhon Smith</h2>
+                                    <p class="invo-addr-1">
+                                        Phone: +91 1234567890<br/>
+                                        Wedding Event<br/>
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        <div class="invoice-center">
-                            <div class="">
+
+                        <div class="invoice-center mt-2">
+                            <div class="table-responsive">
                                 <table class="table mb-0 table-striped invoice-table">
                                     <thead class="bg-active">
                                         <tr>
@@ -139,26 +82,11 @@
                                             <th class="text-end">மொத்தம் (₹)</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Businesscard Design</td>
-                                            <td class="text-center">300</td>
-                                            <td class="text-center">₹2</td>
-                                            <td class="text-end">₹600</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td class="text-center f-w-600 active-color">மொத்தம் (₹)</td>
-                                            <td class="f-w-600 text-end active-color">₹795.99</td>
-                                        </tr>
-                                    </tbody>
+                                    <tbody></tbody>
                                 </table>
                             </div>
                         </div>
-                        
+
                         <div class="invoice-contact clearfix mt-3">
                             <div class="row g-0">
                                 <div class="col-sm-12">
@@ -172,13 +100,12 @@
                         </div>
                     </div>
 
-                    <!-- Buttons -->
-                    <div class="invoice-btn-section clearfix d-print-none mt-3">
+                    <div class="invoice-btn-section clearfix d-print-none">
                         <a href="javascript:window.print()" class="btn btn-lg btn-primary">
                             <i class="fa fa-print"></i> Print Invoice
                         </a>
                         <a id="invoice_download_btn" class="btn btn-lg btn-warning">
-                            <i class="fa fa-download"></i> Download Invoice
+                            <i class="fa fa-download"></i> Download PDF
                         </a>
                         <a onclick="sendInvoiceWhatsApp()" class="btn btn-lg btn-success">
                             <i class="fa fa-whatsapp"></i> Send via WhatsApp
@@ -189,94 +116,102 @@
         </div>
     </div>
 </div>
-<!-- Invoice end -->
 
 <!-- Scripts -->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/jspdf.min.js"></script>
 <script src="assets/js/html2canvas.js"></script>
-<script src="assets/js/app.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  const billData = JSON.parse(localStorage.getItem("selectedBill"));
-  if (!billData) return;
+    const billData = JSON.parse(localStorage.getItem("selectedBill"));
+    if (!billData) return;
 
-  document.querySelector(".invoice-headar .date").textContent = billData.date;
-  document.querySelector(".invoice-number .name").textContent = billData.name;
-  document.querySelector(".invo-addr-1").innerHTML = `
-    Phone: ${billData.phone}<br/>
-    ${billData.event}<br/>
-  `;
-
-  let rows = "";
-  billData.items.forEach((item, i) => {
-    rows += `
-      <tr>
-        <td>${i + 1}</td>
-        <td>${item.note}</td>
-        <td class="text-center">${item.sqft}</td>
-        <td class="text-center">₹${item.price}</td>
-        <td class="text-end">₹${item.total}</td>
-      </tr>
+    document.querySelector(".invoice-headar .date").textContent = billData.date;
+    document.querySelector(".invoice-number .name").textContent = billData.name;
+    document.querySelector(".invo-addr-1").innerHTML = `
+        Phone: ${billData.phone}<br/>
+        ${billData.event}<br/>
     `;
-  });
 
-  rows += `
-    <tr>
-      <td></td><td></td><td></td>
-      <td class="text-center f-w-600 active-color">மொத்தம் (₹)</td>
-      <td class="f-w-600 text-end active-color">₹${billData.grand_total}</td>
-    </tr>
-  `;
+    let rows = "";
+    billData.items.forEach((item, i) => {
+        rows += `
+        <tr>
+            <td>${i + 1}</td>
+            <td>${item.note}</td>
+            <td class="text-center">${item.sqft}</td>
+            <td class="text-center">₹${item.price}</td>
+            <td class="text-end">₹${item.total}</td>
+        </tr>
+        `;
+    });
+    rows += `
+        <tr>
+            <td></td><td></td><td></td>
+            <td class="text-center f-w-600 active-color">மொத்தம் (₹)</td>
+            <td class="f-w-600 text-end active-color">₹${billData.grand_total}</td>
+        </tr>
+    `;
+    document.querySelector(".invoice-table tbody").innerHTML = rows;
+});
 
-  document.querySelector(".invoice-table tbody").innerHTML = rows;
+// PDF Download
+document.getElementById("invoice_download_btn").addEventListener("click", async function () {
+    const invoiceElement = document.getElementById("invoice_wrapper");
+    invoiceElement.style.overflow = "visible";
+    invoiceElement.style.height = "auto";
+
+    const canvas = await html2canvas(invoiceElement, { scale: 2, useCORS: true });
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF('p', 'pt', 'a4');
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    let position = 0;
+    let remainingHeight = pdfHeight;
+
+    while (remainingHeight > 0) {
+        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+        remainingHeight -= pdf.internal.pageSize.getHeight();
+        position -= pdf.internal.pageSize.getHeight();
+        if (remainingHeight > 0) pdf.addPage();
+    }
+
+    pdf.save("invoice.pdf");
+    invoiceElement.style.overflow = "";
+    invoiceElement.style.height = "";
 });
 
 // WhatsApp share
 async function sendInvoiceWhatsApp() {
-  const canvas = await captureInvoice();
-  const imgData = canvas.toDataURL("image/png");
+    const invoiceElement = document.getElementById("invoice_wrapper");
+    invoiceElement.style.overflow = "visible";
+    invoiceElement.style.height = "auto";
 
-  function dataURLtoBlob(dataurl) {
-      var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-          bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-      while(n--) { u8arr[n] = bstr.charCodeAt(n); }
-      return new Blob([u8arr], {type:mime});
-  }
+    const canvas = await html2canvas(invoiceElement, { scale: 2, useCORS: true });
+    const imgData = canvas.toDataURL("image/png");
 
-  const blob = dataURLtoBlob(imgData);
-  const file = new File([blob], "invoice.png", {type: "image/png"});
+    function dataURLtoBlob(dataurl) {
+        var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+        while(n--) { u8arr[n] = bstr.charCodeAt(n); }
+        return new Blob([u8arr], {type:mime});
+    }
 
-  if (navigator.canShare && navigator.canShare({ files: [file] })) {
-    await navigator.share({
-      files: [file],
-      title: "Invoice",
-      text: "Here is your invoice."
-    });
-  } else {
-    alert("Your browser doesn’t support direct WhatsApp share. Please download and send manually.");
-  }
+    const blob = dataURLtoBlob(imgData);
+    const file = new File([blob], "invoice.png", {type: "image/png"});
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: "Invoice", text: "Here is your invoice." });
+    } else {
+        alert("Your browser doesn’t support direct WhatsApp share. Please download and send manually.");
+    }
+
+    invoiceElement.style.overflow = "";
+    invoiceElement.style.height = "";
 }
-async function captureInvoice() {
-  const invoiceElement = document.getElementById("invoice_wrapper");
-
-  // Force full height capture (disable scrollbars temporarily)
-  invoiceElement.style.overflow = "visible";
-  invoiceElement.style.height = "auto";
-
-  const canvas = await html2canvas(invoiceElement, {
-    scale: 2, // better quality
-    useCORS: true
-  });
-
-  // Restore after capture
-  invoiceElement.style.overflow = "";
-  invoiceElement.style.height = "";
-
-  return canvas;
-}
-
 </script>
 </body>
 </html>
