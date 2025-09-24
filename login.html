@@ -31,6 +31,7 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/style1.css" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin:0; padding:0; }
 
@@ -128,9 +129,9 @@
 
 </style>
 </head>
-<body>
+<body class="img js-fullheight vh-100" style="background-image: url(img/bg.jpg);">
     <!-- <body> -->
-        <div class="container-xxl bg-white p-0">
+        <div class="container-xxl p-0">
             <!-- Spinner Start -->
             <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
                 <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
@@ -178,29 +179,40 @@
                     </div>
                 </nav>
             </div>
-            <div class="container-xxl py-2 dark ">
-              <div class="card mt-5">
-                <div class="card-header">
-                    <h4 class="text-center">🔑 Login</h4>
-                </div>
-                <div class="card-body">
-                    <form id="loginForm">
-                        <div class="form-group mt-2">
-                            <label for="username">User Name</label>
-                            <input type="text" class="form-control" id="username">
-                        </div>
-                        <div class="form-group mt-2">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password">
-                        </div>
-                        <hr>
-                        <center><button type="submit" class="btn btn-primary">Login</button></center>
-                    </form>
-                </div>
-              </div>
-            </div>
+            <!-- <section class="ftco-section"> -->
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mt-3">
+					<h2 class="heading-section">Admin</h2>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-4">
+					<div class="login-wrap p-0">
+		      	<!-- <h3 class="mb-2 text-center">Welcome</h3> -->
+		      	<form id="loginForm">
+		      		<!-- <div class="form-group">
+		      			<input type="text" class="form-control" placeholder="Username" id="username" required>
+		      		</div> -->
+	            <div class="form-group">
+	              <input type="password" inputmode="numeric" pattern="[0-9]*" class="form-control" placeholder="Password" id="password" required>
+	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+	            </div>
+	            <div class="form-group">
+	            	<button type="submit" class="form-control btn btn-primary submit px-3">
+						Log In</button>
+	            </div>
+	          </form>
+	          
+		      </div>
+				</div>
+			</div>
+		</div>
+	<!-- </section> -->
                 
         </div>
+        
+        
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -219,20 +231,20 @@
 
 <script>
     // Static credentials
-    const staticUser = "admin";
-    const staticPass = "1122";
+    // const staticUser = "admin";
+    const staticPass = "7817";
   
     document.getElementById("loginForm").addEventListener("submit", function(e) {
         e.preventDefault(); // stop form from refreshing
   
-        const username = document.getElementById("username").value.trim();
+        // const username = document.getElementById("username").value.trim();
         const password = document.getElementById("password").value.trim();
   
-        if (username === staticUser && password === staticPass) {
+        if (password === staticPass) {
             // Redirect if correct
             window.location.href = "admin.html"; // change to your page
         } else {
-            alert("Invalid Username or Password");
+            alert("Invalid Password");
         }
     });
   </script>
@@ -240,4 +252,3 @@
 </body>
 
 </html>
-
