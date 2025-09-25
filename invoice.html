@@ -222,7 +222,12 @@ document.getElementById("invoice_download_btn").addEventListener("click", async 
     pdf.save("invoice.pdf");
 });
 
+const pdf = new jsPDF();
+pdf.addFileToVFS("NotoSansTamil-Regular.ttf", fontData); // fontData = base64 of font
+pdf.addFont("NotoSansTamil-Regular.ttf", "NotoTamil", "normal");
+pdf.setFont("NotoTamil"); // Use Tamil font
 
+pdf.text("தமிழ் எழுத்துக்கள்", 10, 10);
 
 
 
