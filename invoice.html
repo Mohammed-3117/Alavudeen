@@ -87,12 +87,12 @@
                                     <tfoot>
     <tr>
         <td></td>
-        <td colspan="2" class="text-center f-w-600">அட்வான்ஸ் (₹)</td>
-        <td class="text-end"><span class="text-danger" style="font-weight: bold;">-</span>&nbsp; ₹<span class="advance"></span></td>
+        <td colspan="2" class="f-w-600"><span class="float-end text-danger">அட்வான்ஸ் (₹)</span></td>
+        <td class="text-end"><span class="text-danger" style="font-weight: bold;">- &nbsp; ₹</span><span class="advance text-danger"></span></td>
     </tr>
     <tr>
         <td></td>
-        <td colspan="2" class="text-center text-success f-w-600">பெற வேண்டிய தொகை (₹)</td>
+        <td colspan="2" class="text-success f-w-600"><span class="float-end">பெற வேண்டிய தொகை (₹)</span></td>
         <td class="f-w-600 text-end">₹<span class="net_total text-success"></span></td>
     </tr>
 </tfoot>
@@ -170,8 +170,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Grand total row
     rows += `<tr>
         <td></td>
-        <td colspan="2" class="text-center f-w-600 active-color">மொத்தம் (₹)</td>
-        <td class="f-w-600 text-end active-color">₹${billData.grand_total}</td>
+        <td colspan="2" class="f-w-600 text-primary"><span class="float-end">மொத்தம் (₹)</span></td>
+        <td class="f-w-600 text-end text-primary">₹${billData.grand_total}</td>
     </tr>`;
 
     document.querySelector(".invoice-table tbody").innerHTML = rows;
