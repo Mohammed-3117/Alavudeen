@@ -185,6 +185,7 @@
           <th>Event</th>
           <th>Name</th>
           <th>Phone</th>
+          <th>Status</th>
           <th >Action</th>
         </tr>
       </thead>
@@ -320,11 +321,16 @@ const supabase = createClient(supabaseUrl, supabaseKey);
   }
 </script>
 <script>
-    const dataBody = document.getElementById("dataBody");
-    
-    // Fetch bills from Supabase
-    async function fetchBills() {
-  const { data, error } = await supabase.from("bills").select("*").order('id', { ascending: false });
+const dataBody = document.getElementById("dataBody");
+
+// Fetch bills from Supabase
+async function fetchBills() {
+  const { data, error } = await supabase
+    .from("bills")
+    .select("*")
+    .eq("status", 0)  // Only fetch rows with status = 0
+    .order('id', { ascending: false });
+
   if (error) return alert("Error fetching data: " + error.message);
 
   dataBody.innerHTML = ""; // Clear table
@@ -343,39 +349,66 @@ const supabase = createClient(supabaseUrl, supabaseKey);
       <td>${row.event}</td>
       <td>${row.name}</td>
       <td>${row.phone}</td>
+      <td>
+        <select class="form-select" style="width: 100px;" onchange="updateStatus(${row.id}, this.value)">
+          <option value="0" ${row.status == 0 ? "selected" : ""}>முடியவில்லை</option>    
+          <option value="1" ${row.status == 1 ? "selected" : ""}>முடிந்தது</option>    
+        </select>
+      </td>
       <td style="width: 120px; white-space: nowrap;">
-  <div class="d-flex">
-    <button class="btn btn-primary btn-sm me-1" onclick='viewBill(${JSON.stringify(row)})'>
-      <i class="bi bi-eye"></i>
-    </button>
-    <button class="btn btn-success btn-sm me-1" onclick='editBill(${JSON.stringify(row)})'>
-        <i class="bi bi-pencil-square text-light"></i>
-      </button>
-    <button class="btn btn-info btn-sm me-1" onclick='openInvoice(${JSON.stringify(row)})'>
-      <i class="bi bi-receipt text-light"></i>
-    </button>
-    <button class="btn btn-danger btn-sm" onclick='deleteBill(${row.id})'>
-      <i class="bi bi-trash"></i>
-    </button>
-  </div>
-</td>
-
+        <div class="d-flex">
+          <button class="btn btn-primary btn-sm me-1" onclick='viewBill(${JSON.stringify(row)})'>
+            <i class="bi bi-eye"></i>
+          </button>
+          <button class="btn btn-success btn-sm me-1" onclick='editBill(${JSON.stringify(row)})'>
+              <i class="bi bi-pencil-square text-light"></i>
+          </button>
+          <button class="btn btn-info btn-sm me-1" onclick='openInvoice(${JSON.stringify(row)})'>
+            <i class="bi bi-receipt text-light"></i>
+          </button>
+          <button class="btn btn-danger btn-sm" onclick='deleteBill(${row.id})'>
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+      </td>
     `;
     dataBody.appendChild(tr);
   });
 }
+
+// Update status in Supabase
+async function updateStatus(id, newStatus) {
+  const { error } = await supabase
+    .from("bills")
+    .update({ status: parseInt(newStatus) })
+    .eq("id", id);
+
+  if (error) return alert("Error updating status: " + error.message);
+
+  fetchBills(); // Refresh table
+}
+
+// Fetch on page load
+fetchBills();
+
+
+
 function editBill(bill) {
   // Save bill data in localStorage
   localStorage.setItem("editBill", JSON.stringify(bill));
   // Redirect to billing.html
   window.location.href = "billing.html";
 }
+
+
     function openInvoice(bill) {
   // Save bill data to localStorage
   localStorage.setItem("selectedBill", JSON.stringify(bill));
   // Redirect to invoice.html
   window.location.href = "invoice.html";
 }
+
+
     // View bill in modal
     // Example for viewBill function
 function viewBill(bill) {
