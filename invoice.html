@@ -84,6 +84,18 @@
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
+                                    <tfoot>
+    <tr>
+        <td></td>
+        <td colspan="2" class="text-center f-w-600">அட்வான்ஸ் (₹)</td>
+        <td class="text-end">₹<span class="advance"></span></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td colspan="2" class="text-center f-w-600">பெற வேண்டிய தொகை (₹)</td>
+        <td class="f-w-600 text-end">₹<span class="net_total"></span></td>
+    </tr>
+</tfoot>
                                 </table>
                             </div>
                         </div>
@@ -130,20 +142,29 @@ document.addEventListener("DOMContentLoaded", function () {
         name: "Jhon Smith",
         phone: "+91 1234567890",
         event: "Wedding Event",
+        address: "No 123, Beach Road, Kayalpatnam",
         items: [
             {note: "Businesscard Design", sqft: 300, price: 2, total: 600},
             {note: "Banner Design", sqft: 50, price: 10, total: 500},
             {note: "Stage Decoration", sqft: 200, price: 5, total: 1000},
         ],
-        grand_total: 2100
+        grand_total: 2100,
+        advance: 500,
+        net_total: 1600
     };
 
+    // Header info
     document.querySelector(".date").textContent = billData.date;
     document.querySelector(".name").textContent = billData.name;
-    document.querySelector(".invo-addr-1").innerHTML = `Phone: ${billData.phone}<br/>${billData.event}<br/>`;
+    document.querySelector(".invo-addr-1").innerHTML = `
+        Phone: ${billData.phone}<br/>
+        Event: ${billData.event}<br/>
+        Address: ${billData.address || ""} 
+    `;
 
+    // Build rows for items + grand total
     let rows = "";
-    billData.items.forEach((item, i) => {
+    billData.items.forEach((item) => {
         rows += `<tr>
             <td>${item.note}</td>
             <td class="text-center">${item.sqft}</td>
@@ -152,6 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </tr>`;
     });
 
+    // Grand total row
     rows += `<tr>
         <td></td>
         <td colspan="2" class="text-center f-w-600 active-color">மொத்தம் (₹)</td>
@@ -159,7 +181,12 @@ document.addEventListener("DOMContentLoaded", function () {
     </tr>`;
 
     document.querySelector(".invoice-table tbody").innerHTML = rows;
+
+    // ✅ Now update the <tfoot> spans
+    document.querySelector(".advance").textContent = billData.advance || 0;
+    document.querySelector(".net_total").textContent = billData.net_total || billData.grand_total;
 });
+
 
 // PDF download
 document.getElementById("invoice_download_btn").addEventListener("click", async function() {
@@ -199,28 +226,31 @@ document.getElementById("invoice_download_btn").addEventListener("click", async 
 
 
 
-// WhatsApp share
 async function sendInvoiceWhatsApp() {
     const invoiceElement = document.getElementById("invoice_wrapper");
-    const canvas = await html2canvas(invoiceElement, {scale: 2, useCORS: true});
+    const canvas = await html2canvas(invoiceElement, { scale: 2, useCORS: true });
     const imgData = canvas.toDataURL("image/png");
 
     function dataURLtoBlob(dataurl) {
         let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
             bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-        while(n--) { u8arr[n] = bstr.charCodeAt(n); }
-        return new Blob([u8arr], {type:mime});
+        while (n--) { u8arr[n] = bstr.charCodeAt(n); }
+        return new Blob([u8arr], { type: mime });
     }
 
     const blob = dataURLtoBlob(imgData);
-    const file = new File([blob], "invoice.png", {type: "image/png"});
+    const file = new File([blob], "invoice.png", { type: "image/png" });
 
-    if (navigator.canShare && navigator.canShare({files:[file]})) {
-        await navigator.share({files:[file], title:"Invoice", text:"Here is your invoice."});
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+            files: [file],    // ✅ only send image
+            title: "Invoice"
+        });
     } else {
         alert("Your browser doesn’t support direct WhatsApp share. Please download and send manually.");
     }
 }
+
 </script>
 
 </body>
