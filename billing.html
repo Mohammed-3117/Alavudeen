@@ -209,6 +209,7 @@
 <label for="">விழா</label><input type="text" class="form-control" id="eventName"/>
 <label for="">பெயர்</label><input type="text" class="form-control" id="name"/>
 <label for="">போன்</label><input type="text" class="form-control" id="phone"/>
+<label for="">முகவரி</label><input type="text" class="form-control" id="address"/>
 <div class="table-responsive mt-2">
     <table class="table table-bordered" id="billTable">
         <thead>
@@ -232,22 +233,35 @@
             </tr>
         </tbody>
         <tfoot>
-            <tr>
-                <td colspan="4"></td>
-                <td colspan="2">
-                    <div class="row">
-                        <div class="col">
-                            <button class="btn btn-success no-print" onclick="addRow()">Add</button>
-                            <button class="btn btn-info no-print" onclick="saveBill()">Save</button>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </tfoot>
+    <tr>
+        <td colspan="4"><p class="float-end">அட்வான்ஸ்</p></td>
+        <td colspan="2">
+            <input type="number" value="" id="advanceInput" class="form-control">
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4"><p class="float-end">பெற வேண்டிய தொகை</p></td>
+        <td colspan="2">
+            ₹ <span id="netTotal">0</span>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4"></td>
+        <td colspan="2">
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-success no-print" onclick="addRow()">Add</button>
+                    <button class="btn btn-info no-print" onclick="saveBill()">Save</button>
+                </div>
+            </div>
+        </td>
+    </tr>
+</tfoot>
+
     </table>
 </div>
 <div class="totals">
-    <strong class="float-end mt-3 mx-3">Grand Total: ₹ <span id="grandTotal">0</span></strong>
+    <strong class="float-end mt-3 mx-3"> ஒட்டு மொத்தம்: ₹ <span id="grandTotal">0</span></strong>
   </div>
                 </div>
 
@@ -277,71 +291,92 @@
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 </script>
 <script>
-    async function saveBill() {
-    updateTotals();
+async function saveBill() {
+  updateTotals();
 
-    const eventDate = document.getElementById("eventDate").value;
-if (!eventDate) {
+  const eventDate = document.getElementById("eventDate").value;
+  if (!eventDate) {
     alert("Please select a date!");
     return;
-}
-    const eventName = document.getElementById("eventName").value;
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
-    const grandTotal = parseFloat(document.getElementById("grandTotal").innerText);
+  }
 
-    const rows = document.querySelectorAll("#billBody tr");
-    const items = [];
-    rows.forEach(row => {
-        items.push({
-            note: row.cells[1].children[0].value,
-            sqft: parseFloat(row.cells[2].children[0].value) || 0,
-            price: parseFloat(row.cells[3].children[0].value) || 0,
-            total: parseFloat(row.querySelector(".rowTotal").innerText) || 0
-        });
+  const eventName = document.getElementById("eventName").value;
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const address = document.getElementById("address").value;
+
+  const advance = parseFloat(document.getElementById("advanceInput").value) || 0; // ✅ Advance
+  const grandTotal = parseFloat(document.getElementById("grandTotal").innerText);
+  const netTotal = parseFloat(document.getElementById("netTotal").innerText);
+
+  const rows = document.querySelectorAll("#billBody tr");
+  const items = [];
+  rows.forEach(row => {
+    items.push({
+      note: row.cells[1].children[0].value,
+      sqft: parseFloat(row.cells[2].children[0].value) || 0,
+      price: parseFloat(row.cells[3].children[0].value) || 0,
+      total: parseFloat(row.querySelector(".rowTotal").innerText) || 0
     });
+  });
 
-    const { data, error } = await supabase.from("bills").insert([{
-        date: eventDate,
-        event: eventName,
-        name,
-        phone,
-        items,
-        grand_total: grandTotal
-    }]);
+  const { data, error } = await supabase.from("bills").insert([{
+  date: eventDate,
+  event: eventName,
+  name,
+  phone,
+  address,            // ✅ save address
+  advance,            // ✅ save advance
+  grand_total: grandTotal,
+  net_total: netTotal, // ✅ save net payable
+  items               // ✅ save description + rows as JSON
+}]);
 
-    if (error) {
-        alert("❌ Save failed: " + error.message);
-    } else {
-        alert("✅ Bill saved successfully!");
-        window.location.href = "report.html"; // redirect to report page
-    }
+
+  if (error) {
+    alert("❌ Save failed: " + error.message);
+  } else {
+    alert("✅ Bill saved successfully!");
+    window.location.href = "report.html"; // redirect to report page
+  }
 }
+
 
     // Update totals and S.No
     function updateTotals() {
-      let rows = document.querySelectorAll("#billBody tr");
-      let grandTotal = 0;
-      let sno = 1;
-  
-      rows.forEach(row => {
-        // Set S.No
-        row.cells[0].innerText = sno++;
-  
-        // Get inputs
-        let sqft = row.cells[2].children[0].value || 0;
-        let price = row.cells[3].children[0].value || 0;
-  
-        // Calculate row total
-        let total = sqft * price;
-        row.querySelector(".rowTotal").innerText = total;
-  
-        // Add to grand total
-        grandTotal += total;
-      });
-  
-      document.getElementById("grandTotal").innerText = grandTotal;
-    }
+  let rows = document.querySelectorAll("#billBody tr");
+  let grandTotal = 0;
+  let sno = 1;
+
+  rows.forEach(row => {
+    // Set S.No
+    row.cells[0].innerText = sno++;
+
+    // Get inputs
+    let sqft = row.cells[2].children[0].value || 0;
+    let price = row.cells[3].children[0].value || 0;
+
+    // Calculate row total
+    let total = sqft * price;
+    row.querySelector(".rowTotal").innerText = total;
+
+    // Add to grand total
+    grandTotal += total;
+  });
+
+  // Get advance value
+  let advance = parseFloat(document.getElementById("advanceInput").value) || 0;
+
+  // Calculate net payable
+  let netTotal = grandTotal - advance;
+
+  document.getElementById("grandTotal").innerText = grandTotal;
+  document.getElementById("netTotal").innerText = netTotal >= 0 ? netTotal : 0;
+}
+
+// Attach input event for advance input
+document.getElementById("advanceInput").addEventListener("input", updateTotals);
+
   
     // Add a new row
     function addRow() {
