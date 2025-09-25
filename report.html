@@ -348,6 +348,9 @@ const supabase = createClient(supabaseUrl, supabaseKey);
     <button class="btn btn-primary btn-sm me-1" onclick='viewBill(${JSON.stringify(row)})'>
       <i class="bi bi-eye"></i>
     </button>
+    <button class="btn btn-success btn-sm me-1" onclick='editBill(${JSON.stringify(row)})'>
+        <i class="bi bi-pencil-square text-light"></i>
+      </button>
     <button class="btn btn-info btn-sm me-1" onclick='openInvoice(${JSON.stringify(row)})'>
       <i class="bi bi-receipt text-light"></i>
     </button>
@@ -361,7 +364,12 @@ const supabase = createClient(supabaseUrl, supabaseKey);
     dataBody.appendChild(tr);
   });
 }
-
+function editBill(bill) {
+  // Save bill data in localStorage
+  localStorage.setItem("editBill", JSON.stringify(bill));
+  // Redirect to billing.html
+  window.location.href = "billing.html";
+}
     function openInvoice(bill) {
   // Save bill data to localStorage
   localStorage.setItem("selectedBill", JSON.stringify(bill));
