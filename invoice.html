@@ -88,12 +88,12 @@
     <tr>
         <td></td>
         <td colspan="2" class="text-center f-w-600">அட்வான்ஸ் (₹)</td>
-        <td class="text-end">₹<span class="advance"></span></td>
+        <td class="text-end"><span class="text-danger" style="font-weight: bold;">-</span>&nbsp; ₹<span class="advance"></span></td>
     </tr>
     <tr>
         <td></td>
-        <td colspan="2" class="text-center f-w-600">பெற வேண்டிய தொகை (₹)</td>
-        <td class="f-w-600 text-end">₹<span class="net_total"></span></td>
+        <td colspan="2" class="text-center text-success f-w-600">பெற வேண்டிய தொகை (₹)</td>
+        <td class="f-w-600 text-end">₹<span class="net_total text-success"></span></td>
     </tr>
 </tfoot>
                                 </table>
@@ -116,12 +116,6 @@
                     <div class="invoice-btn-section clearfix d-print-none">
                         <a href="javascript:window.print()" class="btn btn-lg btn-primary">
                             <i class="fa fa-print"></i> Print Invoice
-                        </a>
-                        <a id="invoice_download_btn" class="btn btn-lg btn-warning">
-                            <i class="fa fa-download"></i> Download PDF
-                        </a>
-                        <a onclick="sendInvoiceWhatsApp()" class="btn btn-lg btn-success">
-                            <i class="fa fa-whatsapp"></i> Send via WhatsApp
                         </a>
                     </div>
                 </div>
@@ -186,77 +180,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector(".advance").textContent = billData.advance || 0;
     document.querySelector(".net_total").textContent = billData.net_total || billData.grand_total;
 });
-
-
-// PDF download
-document.getElementById("invoice_download_btn").addEventListener("click", async function() {
-    const invoiceElement = document.getElementById("invoice_wrapper");
-
-    // Temporarily scale down if too wide
-    const originalWidth = invoiceElement.offsetWidth;
-    const pageWidth = 595; // A4 pt width
-    let scale = pageWidth / originalWidth;
-    if (scale > 1) scale = 1; // don't upscale
-
-    const canvas = await html2canvas(invoiceElement, { scale: 3 * scale, useCORS: true });
-    const imgData = canvas.toDataURL("image/png");
-
-    const pdf = new jsPDF('p', 'pt', 'a4');
-    const pdfWidth = pdf.internal.pageSize.width * 0.95; // small margin
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-    const xOffset = (pdf.internal.pageSize.width - pdfWidth) / 2;
-
-    let heightLeft = pdfHeight;
-    let position = 0;
-
-    pdf.addImage(imgData, 'PNG', xOffset, position, pdfWidth, pdfHeight);
-    heightLeft -= pdf.internal.pageSize.height;
-
-    while (heightLeft > 0) {
-        position = heightLeft - pdfHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', xOffset, position, pdfWidth, pdfHeight);
-        heightLeft -= pdf.internal.pageSize.height;
-    }
-
-    pdf.save("invoice.pdf");
-});
-
-const pdf = new jsPDF();
-pdf.addFileToVFS("NotoSansTamil-Regular.ttf", fontData); // fontData = base64 of font
-pdf.addFont("NotoSansTamil-Regular.ttf", "NotoTamil", "normal");
-pdf.setFont("NotoTamil"); // Use Tamil font
-
-pdf.text("தமிழ் எழுத்துக்கள்", 10, 10);
-
-
-
-async function sendInvoiceWhatsApp() {
-    const invoiceElement = document.getElementById("invoice_wrapper");
-
-    // Step 1: Generate PDF like your download button
-    const canvas = await html2canvas(invoiceElement, { scale: 3, useCORS: true });
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF('p', 'pt', 'a4');
-    const pdfWidth = pdf.internal.pageSize.width * 0.95;
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-    const xOffset = (pdf.internal.pageSize.width - pdfWidth) / 2;
-    pdf.addImage(imgData, 'PNG', xOffset, 0, pdfWidth, pdfHeight);
-
-    // Step 2: Convert PDF to Blob
-    const pdfBlob = pdf.output("blob");
-
-    // Step 3: Create File
-    const file = new File([pdfBlob], "invoice.pdf", { type: "application/pdf" });
-
-    // Step 4: Share
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({ files: [file], title: "Invoice PDF" });
-    } else {
-        alert("Your browser doesn’t support direct WhatsApp share. Please download and send manually.");
-    }
-}
-
 
 </script>
 
