@@ -205,8 +205,8 @@
           <!-- Table will be injected dynamically -->
         </div>
         <div class="modal-footer">
-          <button class="btn btn-success" onclick="printModal()">Print</button>
-          <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <!-- <button class="btn btn-success" onclick="printModal()">Print</button> -->
+          <button class="btn btn-danger" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -371,10 +371,11 @@ const supabase = createClient(supabaseUrl, supabaseKey);
     // View bill in modal
     // Example for viewBill function
 function viewBill(bill) {
-    let html = `<p><strong>Date:</strong> ${bill.date}</p>
-                <p><strong>Event:</strong> ${bill.event}</p>
-                <p><strong>Name:</strong> ${bill.name}</p>
-                <p><strong>Phone:</strong> ${bill.phone}</p>
+    let html = `<p><strong>தேதி:</strong> ${bill.date}</p>
+                <p><strong>விழா:</strong> ${bill.event}</p>
+                <p><strong>பெயர்:</strong> ${bill.name}</p>
+                <p><strong>போன்:</strong> ${bill.phone}</p>
+                <p><strong>முகவரி:</strong> ${bill.address}</p>
                 <table class="table table-bordered">
                   <thead>
                     <tr>
@@ -396,7 +397,9 @@ function viewBill(bill) {
         </tr>`;
     });
     html += `</tbody></table>
-             <h5 class="text-end">Grand Total: ₹ ${bill.grand_total}</h5>`;
+            <h6 class="text-end">ஒட்டு மொத்தம்: ₹ ${bill.grand_total}</h6>
+             <h6 class="text-end">அட்வான்ஸ்: ₹ ${bill.advance}</h6>
+             <h6 class="text-end">பெற வேண்டிய தொகை: ₹ ${bill.net_total}</h6>`;
     document.getElementById("modalBody").innerHTML = html;
     new bootstrap.Modal(document.getElementById('viewModal')).show();
 }
