@@ -251,7 +251,8 @@
             <div class="row">
                 <div class="col">
                     <button class="btn btn-success no-print" onclick="addRow()">Add</button>
-                    <button class="btn btn-info no-print" onclick="saveBill()">Save</button>
+                    <button class="btn btn-info no-print" id="saveBtn" onclick="saveBill()">Save</button>
+
                 </div>
             </div>
         </td>
@@ -266,8 +267,7 @@
                 </div>
 
 
-<!-- Back to Top -->
-<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
 </div>
 
 <!-- JavaScript Libraries -->
@@ -295,17 +295,14 @@ async function saveBill() {
   updateTotals();
 
   const eventDate = document.getElementById("eventDate").value;
-  if (!eventDate) {
-    alert("Please select a date!");
-    return;
-  }
+  if (!eventDate) { alert("Please select a date!"); return; }
 
   const eventName = document.getElementById("eventName").value;
   const name = document.getElementById("name").value;
   const phone = document.getElementById("phone").value;
   const address = document.getElementById("address").value;
 
-  const advance = parseFloat(document.getElementById("advanceInput").value) || 0; // ✅ Advance
+  const advance = parseFloat(document.getElementById("advanceInput").value) || 0;
   const grandTotal = parseFloat(document.getElementById("grandTotal").innerText);
   const netTotal = parseFloat(document.getElementById("netTotal").innerText);
 
@@ -320,24 +317,44 @@ async function saveBill() {
     });
   });
 
-  const { data, error } = await supabase.from("bills").insert([{
-  date: eventDate,
-  event: eventName,
-  name,
-  phone,
-  address,            // ✅ save address
-  advance,            // ✅ save advance
-  grand_total: grandTotal,
-  net_total: netTotal, // ✅ save net payable
-  items               // ✅ save description + rows as JSON
-}]);
+  const saveBtn = document.getElementById("saveBtn");
+  const billId = saveBtn.dataset.billId;
 
+  if (billId) {
+    // Update existing bill
+    const { error } = await supabase.from("bills").update({
+      date: eventDate,
+      event: eventName,
+      name,
+      phone,
+      address,
+      advance,
+      grand_total: grandTotal,
+      net_total: netTotal,
+      items
+    }).eq("id", billId);
 
-  if (error) {
-    alert("❌ Save failed: " + error.message);
+    if (error) {
+      alert("❌ Update failed: " + error.message);
+    } else {
+      alert("✅ Bill updated successfully!");
+      window.location.href = "report.html";
+    }
   } else {
-    alert("✅ Bill saved successfully!");
-    window.location.href = "report.html"; // redirect to report page
+    // Insert new bill (original code)
+    const { data, error } = await supabase.from("bills").insert([{
+      date: eventDate,
+      event: eventName,
+      name,
+      phone,
+      address,
+      advance,
+      grand_total: grandTotal,
+      net_total: netTotal,
+      items
+    }]);
+    if (error) { alert("❌ Save failed: " + error.message); }
+    else { alert("✅ Bill saved successfully!"); window.location.href = "report.html"; }
   }
 }
 
@@ -425,6 +442,48 @@ document.getElementById("advanceInput").addEventListener("input", updateTotals);
   function goBack() {
     window.history.back(); // Goes back to the previous page
   }
+  </script>
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+  const editBillData = localStorage.getItem("editBill");
+  if (editBillData) {
+    const bill = JSON.parse(editBillData);
+
+    document.getElementById("eventDate").value = bill.date;
+    document.getElementById("eventName").value = bill.event;
+    document.getElementById("name").value = bill.name;
+    document.getElementById("phone").value = bill.phone;
+    document.getElementById("address").value = bill.address;
+    document.getElementById("advanceInput").value = bill.advance || 0;
+
+    // Clear table
+    const tableBody = document.getElementById("billBody");
+    tableBody.innerHTML = "";
+
+    // Populate rows
+    bill.items.forEach((item, idx) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${idx + 1}</td>
+        <td><input type="text" value="${item.note}" class="form-control" style="width: 110px;"></td>
+        <td><input type="number" value="${item.sqft}" min="1" class="form-control" style="width: 70px;"></td>
+        <td><input type="number" value="${item.price}" min="0" class="form-control" style="width: 90px;"></td>
+        <td class="rowTotal">${item.total}</td>
+        <td class="no-print"><button onclick="removeRow(this)">❌</button></td>
+      `;
+      tableBody.appendChild(row);
+      attachEvents(row);
+    });
+
+    updateTotals();
+    // Store bill id for update
+    document.getElementById("saveBtn").dataset.billId = bill.id;
+
+    // Remove localStorage key
+    localStorage.removeItem("editBill");
+  }
+});
+
   </script>
 </body>
 
