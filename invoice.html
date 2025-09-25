@@ -228,28 +228,30 @@ document.getElementById("invoice_download_btn").addEventListener("click", async 
 
 async function sendInvoiceWhatsApp() {
     const invoiceElement = document.getElementById("invoice_wrapper");
-    const canvas = await html2canvas(invoiceElement, { scale: 2, useCORS: true });
+
+    // Step 1: Generate PDF like your download button
+    const canvas = await html2canvas(invoiceElement, { scale: 3, useCORS: true });
     const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF('p', 'pt', 'a4');
+    const pdfWidth = pdf.internal.pageSize.width * 0.95;
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    const xOffset = (pdf.internal.pageSize.width - pdfWidth) / 2;
+    pdf.addImage(imgData, 'PNG', xOffset, 0, pdfWidth, pdfHeight);
 
-    function dataURLtoBlob(dataurl) {
-        let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-        while (n--) { u8arr[n] = bstr.charCodeAt(n); }
-        return new Blob([u8arr], { type: mime });
-    }
+    // Step 2: Convert PDF to Blob
+    const pdfBlob = pdf.output("blob");
 
-    const blob = dataURLtoBlob(imgData);
-    const file = new File([blob], "invoice.png", { type: "image/png" });
+    // Step 3: Create File
+    const file = new File([pdfBlob], "invoice.pdf", { type: "application/pdf" });
 
+    // Step 4: Share
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({
-            files: [file],    // ✅ only send image
-            title: "Invoice"
-        });
+        await navigator.share({ files: [file], title: "Invoice PDF" });
     } else {
         alert("Your browser doesn’t support direct WhatsApp share. Please download and send manually.");
     }
 }
+
 
 </script>
 
